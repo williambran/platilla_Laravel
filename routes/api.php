@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V2\cartController as CartsV2;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::apiResource('v2/carts', CartsV2::class)
+->only(['index','show','store','destroy']);
+
+
+Route::group(['prefix' => 'v2/auth'], function(){
+  Route::post('signup','AppController@signUp');
+  Route::post('login', 'AppController@login');
 });
+
+
+//login-register-logout
+Route::group(['middleware' => 'auth:api'],
+ function(){
+   Route::group(['prefix'=>'v2'], function(){
+     Route::post('logout','AppController@logout');
+     Route::get('user','AppController@user');
+   });
+
+ });
+
+
+ //Route::post('logout','AppController@logout');
