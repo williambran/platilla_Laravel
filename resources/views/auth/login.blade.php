@@ -79,7 +79,7 @@
           var email = document.getElementById("email").value;
 
           console.log(email)
-         // window.webkit.messageHandlers.logHandler.postMessagex(email)
+          window.webkit.messageHandlers.jsMessageHandler.postMessage(email)
          window.ReactNativeWebView.postMessage(email)
          triggerFromMovil(email)
         };
@@ -87,14 +87,15 @@
         function triggerFromMovil(apellido)  {
          // document.getElementById("email").innerHTML = apellido
            document.getElementById("password").value = apellido;
-           window.ReactNativeWebView.postMessage('Data recibida desde app react'+ apellido)
+           window.ReactNativeWebView.postMessage('Data recibida desde app react')
 
-           window.addEventListener("message", message => {
-            alert(message.data)
-           })
+
           console.log(apellido);
           return apellido
         };
+        window.addEventListener("message", message => {
+            alert(message)
+           })
       </script>
 
     </body>
