@@ -79,13 +79,19 @@
           var email = document.getElementById("email").value;
 
           console.log(email)
-          window.webkit.messageHandlers.logHandler.postMessagex(email)
+         // window.webkit.messageHandlers.logHandler.postMessagex(email)
+         window.ReactNativeWebView.postMessage(email)
+         triggerFromMovil(email)
         };
 
         function triggerFromMovil(apellido)  {
-     // document.getElementById("email").innerHTML = apellido
-        document.getElementById("password").value = apellido;
+         // document.getElementById("email").innerHTML = apellido
+           document.getElementById("password").value = apellido;
+           window.ReactNativeWebView.postMessage('Data recibida desde app react'+ apellido)
 
+           window.addEventListener("message", message => {
+            alert(message.data)
+           })
           console.log(apellido);
           return apellido
         };
