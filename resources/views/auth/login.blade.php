@@ -79,7 +79,7 @@
           var email = document.getElementById("email").value;
 
           console.log(email)
-          window.webkit.messageHandlers.jsMessageHandler.postMessage(email)
+        // window.webkit.messageHandlers.jsMessageHandler.postMessage(email)
          window.ReactNativeWebView.postMessage(email)
          triggerFromMovil(email)
         };
