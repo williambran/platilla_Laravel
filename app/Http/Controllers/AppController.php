@@ -29,6 +29,7 @@ class AppController extends Controller
         'email' => $request->email,
         'password' => bcrypt($request->password)
     ]);
+    
 
      return response()->json([
        'message' => 'Successfully created user!'], 201);

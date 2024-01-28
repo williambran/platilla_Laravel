@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->string('tags')->nullable();
             $table->double('price');
+            $table->string('gender')->nullable();
             $table->boolean('active')->default(0);
             $table->boolean('shipplable')->default(0);
             $table->double('weight')->nullable();
@@ -29,7 +30,12 @@ return new class extends Migration
             $table->double('length')->nullable();
             $table->string('dealer')->nullable();
             $table->string('presention')->nullable();
+            $table->string('model');
+            $table->string('talla');
+            $table->string('expiration')->nullable();
+            $table->foreignId('stock_id')->constrained('stocks')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
