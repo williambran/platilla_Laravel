@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Detail extends Model
 {
     use HasFactory;
+
+    public function tallas(){
+        return $this->hasMany(TallaDetail::class);
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

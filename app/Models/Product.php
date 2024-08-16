@@ -18,9 +18,12 @@ class Product extends Model
 
 
 
-    public function stock() {
-        return $this->belongsTo(Stock::class);
+    public function modelProduct() {
+        return $this->belongsTo(ModelProduct::class);
     }
 
+    public function details() {
+        return $this->hasMany(Detail::class);
+    }
     
 }

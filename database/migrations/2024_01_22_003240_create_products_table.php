@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('talla');
             $table->string('expiration')->nullable();
-            $table->foreignId('stock_id')->constrained('stocks')->onDelete('cascade');
+            $table->foreignId('model_product_id')->constrained('model_products')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

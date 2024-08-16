@@ -10,8 +10,8 @@ class Stock extends Model
     use HasFactory;
 
 
-    public function Products() {
-        return $this->hasMany(Product::class);
+    public function inventories() {
+        return $this->hasMany(Inventory::class);
     }
 
 
