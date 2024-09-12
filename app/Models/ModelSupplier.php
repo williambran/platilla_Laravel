@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-//Modelo que relaciona supplier y model_products
+//Modelo que relaciona supplier y model
 class ModelSupplier extends Model
 {
     use HasFactory;

@@ -15,25 +15,19 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('codeID')->unique();
             $table->string('name');
-            $table->string('imageCover');
+            $table->double('price');
+            $table->double('priceCompra');
+            $table->string('cantidad');
             $table->string('images')->nullable();
             $table->string('brand')->nullable();
             $table->string('tags')->nullable();
-            $table->double('price');
             $table->string('gender')->nullable();
             $table->boolean('active')->default(0);
+            $table->date('fecha_activacion')->nullable();
             $table->boolean('shipplable')->default(0);
-            $table->double('weight')->nullable();
-            $table->double('height')->nullable();
-            $table->double('width')->nullable();
-            $table->double('length')->nullable();
-            $table->string('dealer')->nullable();
-            $table->string('presention')->nullable();
-            $table->string('model');
-            $table->string('talla');
-            $table->string('expiration')->nullable();
-            $table->foreignId('model_product_id')->constrained('model_products')->onDelete('cascade');
+            $table->foreignId('model_id')->constrained('models')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

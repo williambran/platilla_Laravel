@@ -19,7 +19,7 @@ class Product extends Model
 
 
     public function modelProduct() {
-        return $this->belongsTo(ModelProduct::class);
+        return $this->belongsTo(ModelProduct::class)->where('model_codeID',$this->model_codeID);
     }
 
     public function details() {

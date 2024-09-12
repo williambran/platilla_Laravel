@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('model_products', function (Blueprint $table) {
+        Schema::create('models', function (Blueprint $table) {
             $table->id();
+            $table->string('codeID')->unique();
             $table->string('name');
-            $table->string('code')->nullable();
+            $table->string('imageCover');
+            $table->foreignId('inventorie_id')->constrained('inventories')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

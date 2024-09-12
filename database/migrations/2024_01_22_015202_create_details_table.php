@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('model');
             $table->string('color');
             $table->string('talla');
+            $table->double('weight')->nullable();
+            $table->double('height')->nullable();
+            $table->double('width')->nullable();
+            $table->double('length')->nullable();
+            $table->string('dealer')->nullable();
             $table->string('expiration');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->timestamps();
