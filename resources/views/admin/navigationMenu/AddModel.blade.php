@@ -15,14 +15,14 @@
           <input type="text" id="code" name="code" required>
       </div>
   
-      <div class="form-group">
-          <label for="count">Cantidad:</label>
-          <input type="number" id="count" name="count" required>
-      </div>
-  
-      <div class="form-group">
-          <label for="inventorie">Inventario:</label>
-          <input type="number" id="inventorie" name="inventorie" required>
+
+
+      <div class="form-group divRow">
+        <div class="form-group"> 
+            <label for="bodegaOption">Bodega:</label>
+            <select id="bodegaOption" class="select-wrapper">
+            </select>
+          </div>
       </div>
   
       <div class="form-group divRow">
@@ -34,7 +34,10 @@
           <div class="addProvedorBtn" id="addProvedorBtn">Nuevo proveedor</div>
       </div>
 
-      
+      <div class="form-group">
+        <label for="modelImg">Imagen Model:</label>
+        <input type="number" id="modelImg" name="modelImg" >
+    </div>
   
       <button type="button" id="btnGuardarModel" class="btn-enviar">Enviar</button>
   
@@ -77,6 +80,10 @@
   const modal = document.getElementById("modalProveedor");
   const btn = document.getElementById("addProvedorBtn");
   const span = document.getElementById("closeModal");
+  const opcionesProvedores = document.getElementById('opcionesProvedores');
+  const opcionesBodega = document.getElementById('bodegaOption');
+
+
 
   var provedores = [{id: 00, name: "wito"}]
   
@@ -168,8 +175,71 @@
 });
 
 
-  
-      
+opcionesProvedores.addEventListener('click', function() {
+        // Código que deseas ejecutar al hacer clic
+        $.ajax({
+        url: '/provedores',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}",
+
+        },
+        success: function(response) {
+            console.log("peticion exitoso", response);
+
+            provedores = response.data
+
+            $('#opcionesProvedores').empty();
+                
+                // Agregar opción por defecto
+                $('#opcionesProvedores').append('<option value="">Seleccione un proveedor</option>');
+                
+                // Recorrer los proveedores y llenar el select con nuevas opciones
+                provedores.forEach(function(proveedor) {
+                    $('#opcionesProvedores').append('<option value="' + proveedor.id + '">' + proveedor.name + '</option>');
+                });
+         
+            // downloadCotizacion(id)
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+
+        }
+    });
+        
+    });
+
+    opcionesBodega.addEventListener('click', function() {
+        $.ajax({
+        url: '/bodegas',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}",
+
+        },
+        success: function(response) {
+            console.log("peticion exitoso", response);
+
+            provedores = response.data
+
+            $('#bodegaOption').empty();
+                
+                // Agregar opción por defecto
+                $('#bodegaOption').append('<option value="">Seleccione una bodega</option>');
+                
+                // Recorrer los proveedores y llenar el select con nuevas opciones
+                provedores.forEach(function(proveedor) {
+                    $('#bodegaOption').append('<option value="' + proveedor.id + '">' + proveedor.name + '</option>');
+                });
+         
+            // downloadCotizacion(id)
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+
+        }
+    });
+    })
   
   </script>
   
