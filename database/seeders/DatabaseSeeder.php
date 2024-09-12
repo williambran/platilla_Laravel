@@ -20,5 +20,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
     }
 }
+/*
+INSERT INTO stocks(id, name) VALUE (1,'mercado local cokies');
+INSERT INTO inventories(id, stock_id,count) VALUE (1,1,3);
+INSERT INTO models(id, codeID,name,inventorie_id) VALUE (1,'010124','D lucy sandalia',1);
+*/

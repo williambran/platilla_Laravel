@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('fatherLastName')->nullable();
+            $table->string('motherLastName')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+          //  $table->foreignId('rol_id')->constrained()->onDelete('cascade'); //->constrained('rols'); agregar si no se toma la relacion
             $table->rememberToken();
             $table->timestamps();
         });
