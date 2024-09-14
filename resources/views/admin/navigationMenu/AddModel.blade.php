@@ -4,25 +4,25 @@
     </div>
   
     <div class="formularioContainer">
-      <form id="miFormulario" class="miFormulario">
+      <form id="miFormulario" class="miFormulario" >
         <div class="form-group">
           <label for="name">Nombre:</label>
           <input type="text" id="name" name="name" required>
       </div>
   
       <div class="form-group">
-          <label for="code">Código:</label>
-          <input type="text" id="code" name="code" required>
+          <label for="codeID">Código:</label>
+          <input type="text" id="codeID" name="codeID" required>
       </div>
   
-      <div class="form-group">
-          <label for="count">Cantidad:</label>
-          <input type="number" id="count" name="count" required>
-      </div>
-  
-      <div class="form-group">
-          <label for="inventorie">Inventario:</label>
-          <input type="number" id="inventorie" name="inventorie" required>
+
+
+      <div class="form-group divRow">
+        <div class="form-group"> 
+            <label for="bodegaOption">Bodega:</label>
+            <select id="bodegaOption" class="select-wrapper">
+            </select>
+          </div>
       </div>
   
       <div class="form-group divRow">
@@ -30,11 +30,14 @@
             <label for="opcionesProvedores">Provedores:</label>
             <select id="opcionesProvedores" class="select-wrapper">
             </select>
-          </div>
-          <div class="addProvedorBtn" id="addProvedorBtn">Nuevo proveedor</div>
+        </div>
+        <div class="addProvedorBtn" id="addProvedorBtn">Nuevo proveedor</div>
       </div>
 
-      
+      <div class="form-group">
+        <label for="modelImg">Imagen Model:</label>
+        <input type="number" id="modelImg" name="modelImg" >
+    </div>
   
       <button type="button" id="btnGuardarModel" class="btn-enviar">Enviar</button>
   
@@ -77,6 +80,10 @@
   const modal = document.getElementById("modalProveedor");
   const btn = document.getElementById("addProvedorBtn");
   const span = document.getElementById("closeModal");
+  const opcionesProvedores = document.getElementById('opcionesProvedores');
+  const opcionesBodega = document.getElementById('bodegaOption');
+
+
 
   var provedores = [{id: 00, name: "wito"}]
   
@@ -137,25 +144,29 @@
       });
  document.getElementById('btnGuardarModel').addEventListener('click', function() {
    
-    const provedorId = document.getElementById('opcionesProvedores');
-    const valorSeleccionado = provedorId.value;
-    var codeID = $('#code').val()
+    const bodegaElement = document.getElementById('bodegaOption');
+    const provedorElement = document.getElementById('opcionesProvedores');
+    const provedorId = provedorElement.value;
+    const bodegaId = bodegaElement.value;
+
+    var codeID = $('#codeID').val()
     var name = $('#name').val()
 
    $.ajax({
-        url: '/admin/Model',
+        url: '/modelos',
         type: 'POST',
         data: {
             _token: "{{ csrf_token() }}",
-            inventorieID: valorSeleccionado,
+            inventorieID: bodegaId,
             codeID: codeID,
-            name: name
+            name: name,
+            provedorId : provedorId
 
         },
         success: function(response) {
             console.log("Registro exitoso", response);
             
-          alert("Registro Exitoso ", response.IDProvedor)
+          alert("Registro Exitoso ")
             // downloadCotizacion(id)
         },
         error: function(xhr, status, error) {
@@ -168,8 +179,71 @@
 });
 
 
-  
-      
+opcionesProvedores.addEventListener('click', function() {
+        // Código que deseas ejecutar al hacer clic
+        $.ajax({
+        url: '/provedores',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}",
+
+        },
+        success: function(response) {
+            console.log("peticion exitoso", response);
+
+            provedores = response.data
+
+            $('#opcionesProvedores').empty();
+                
+                // Agregar opción por defecto
+                $('#opcionesProvedores').append('<option value="">Seleccione un proveedor</option>');
+                
+                // Recorrer los proveedores y llenar el select con nuevas opciones
+                provedores.forEach(function(proveedor) {
+                    $('#opcionesProvedores').append('<option value="' + proveedor.id + '">' + proveedor.name + '</option>');
+                });
+         
+            // downloadCotizacion(id)
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+
+        }
+    });
+        
+    });
+
+    opcionesBodega.addEventListener('click', function() {
+        $.ajax({
+        url: '/bodegas',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}",
+
+        },
+        success: function(response) {
+            console.log("peticion exitoso", response);
+
+            provedores = response.data
+
+            $('#bodegaOption').empty();
+                
+                // Agregar opción por defecto
+                $('#bodegaOption').append('<option value="">Seleccione una bodega</option>');
+                
+                // Recorrer los proveedores y llenar el select con nuevas opciones
+                provedores.forEach(function(proveedor) {
+                    $('#bodegaOption').append('<option value="' + proveedor.id + '">' + proveedor.name + '</option>');
+                });
+         
+            // downloadCotizacion(id)
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+
+        }
+    });
+    })
   
   </script>
   

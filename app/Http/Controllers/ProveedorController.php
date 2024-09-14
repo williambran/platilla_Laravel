@@ -32,4 +32,17 @@ class ProveedorController extends Controller
 
 
     }
+
+    public function getProvedores(){
+        try {
+            $supplier = Supplier::all();
+
+          
+            return response()->json(['success' => true, 'message' => 'Registrado exitosamente.', 'data' => $supplier ]);
+        }
+        catch(\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Algun error']);
+
+        }
+    }
 }

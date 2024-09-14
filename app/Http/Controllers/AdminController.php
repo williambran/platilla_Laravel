@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventory;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
@@ -30,5 +32,19 @@ class AdminController extends Controller
 
         return  response()->json(['success' => true, 'message' => $arrBarCode]);
 
+    }
+
+
+    public function getBodegas() {
+        try {
+            $inventory = Stock::all();
+
+          
+            return response()->json(['success' => true, 'message' => 'Registrado exitosamente.', 'data' => $inventory ]);
+        }
+        catch(\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Algun error']);
+
+        }
     }
 }
