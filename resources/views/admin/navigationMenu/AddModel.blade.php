@@ -4,15 +4,15 @@
     </div>
   
     <div class="formularioContainer">
-      <form id="miFormulario" class="miFormulario">
+      <form id="miFormulario" class="miFormulario" >
         <div class="form-group">
           <label for="name">Nombre:</label>
           <input type="text" id="name" name="name" required>
       </div>
   
       <div class="form-group">
-          <label for="code">Código:</label>
-          <input type="text" id="code" name="code" required>
+          <label for="codeID">Código:</label>
+          <input type="text" id="codeID" name="codeID" required>
       </div>
   
 
@@ -30,8 +30,8 @@
             <label for="opcionesProvedores">Provedores:</label>
             <select id="opcionesProvedores" class="select-wrapper">
             </select>
-          </div>
-          <div class="addProvedorBtn" id="addProvedorBtn">Nuevo proveedor</div>
+        </div>
+        <div class="addProvedorBtn" id="addProvedorBtn">Nuevo proveedor</div>
       </div>
 
       <div class="form-group">
@@ -144,25 +144,29 @@
       });
  document.getElementById('btnGuardarModel').addEventListener('click', function() {
    
-    const provedorId = document.getElementById('opcionesProvedores');
-    const valorSeleccionado = provedorId.value;
-    var codeID = $('#code').val()
+    const bodegaElement = document.getElementById('bodegaOption');
+    const provedorElement = document.getElementById('opcionesProvedores');
+    const provedorId = provedorElement.value;
+    const bodegaId = bodegaElement.value;
+
+    var codeID = $('#codeID').val()
     var name = $('#name').val()
 
    $.ajax({
-        url: '/admin/Model',
+        url: '/modelos',
         type: 'POST',
         data: {
             _token: "{{ csrf_token() }}",
-            inventorieID: valorSeleccionado,
+            inventorieID: bodegaId,
             codeID: codeID,
-            name: name
+            name: name,
+            provedorId : provedorId
 
         },
         success: function(response) {
             console.log("Registro exitoso", response);
             
-          alert("Registro Exitoso ", response.IDProvedor)
+          alert("Registro Exitoso ")
             // downloadCotizacion(id)
         },
         error: function(xhr, status, error) {

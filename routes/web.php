@@ -50,7 +50,7 @@ Route::get('/admin/dashboard/addProducts', function () {
 });
 Route::get('/barCodeProduct', [AdminController::class, 'getBarcodeExample'])->name('barcode.getBarcodeExample');
 Route::post('/admin/addProvedor', [ProveedorController::class, 'store'])->name('proveedor.store');
-Route::post('/admin/Model', [ModelProductController::class, 'store'])->name('model.store');
+Route::post('/modelos', [ModelProductController::class, 'store'])->name('model.store');
 Route::get('/provedores', [ProveedorController::class, 'getProvedores'])->name('all.provedores');
 Route::get('/bodegas', [AdminController::class, 'getBodegas'])->name('all.bodegas');
 

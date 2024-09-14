@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ModelProduct;
+use App\Models\ModelSupplier;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ModelProductController extends Controller
@@ -15,9 +17,22 @@ class ModelProductController extends Controller
             $modelo = new ModelProduct();
             $modelo->codeID = $request->codeID;
             $modelo->name = $request->name;
-            $modelo->inventorie_id = $request->inventorie_id;
+            $modelo->inventorie_id = $request->inventorieID;
+            $modelo->imageCover = "";
+
     
             $modelo->save();
+
+            //agregar provedor
+            $supplier = Supplier::find($request->provedorId );
+
+
+            $provedorModelo = new ModelSupplier();
+            $provedorModelo->supplier_id = $supplier->id;
+            $provedorModelo->model_id = $modelo->id;
+
+            $provedorModelo->save();
+
             return response()->json(['success' => true, 'message' => 'Camión registrado exitosamente.']);
 
         } catch (\Exception $e) {
