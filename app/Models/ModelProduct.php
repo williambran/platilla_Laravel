@@ -14,14 +14,14 @@ class ModelProduct extends Model
     protected $table = 'models';
 
     public function inventario(){
-        return $this->belongsTo(Inventory::class, 'model_id','id');
+        return $this->belongsTo(Inventory::class, 'inventorie_id');
     }
 
     public function products() {
-        return $this->hasMany(Product::class)->where('model_codeID', $this->codeID);
+        return $this->hasMany(Product::class, 'model_id');
     }
 
     public function supplier(){
-        return $this->hasMany(ModelSupplier::class);
+        return $this->hasMany(ModelSupplier::class, 'model_id');
     }
 }
