@@ -7,31 +7,42 @@
 
   <div class="formularioContainer">
 
-    <form id="miFormulario" class="miFormulario" action="{{ 'http://127.0.0.1:8000/add/addProveedor' }}">
-      <div class="form-group"> 
-        <label for="opcionesWito">Elige una Modelo:</label>
-        <select id="opcionesWito" class="select-wrapper">
-          <option value="lalal"> lallaal</option>
-          <option value="lelel"> lelelel</option>
+    <form id="miFormulario" class="miFormulario">
 
+      <div class="form-group">
+        <label for="name">Nombre de Producto:</label>
+        <input type="text" id="nameProduct" name="nameProduct"  required>
+      </div>
+
+      <div class="form-group"> 
+        <label for="opcionesModelosProduct">Elige un Modelo:</label>
+        <select id="opcionesModelosProduct" class="select-wrapper">
         </select>
       </div>
 
     <div class="form-group">
         <label for="name">Code Model:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="codeModel" name="codeModel" readonly required>
     </div>
       
       <div class="form-group">
-        <label for="email">Marca :</label>
-        <input type="email" id="email" name="email" required><br><br>
+        <label for="marcaInput">Marca :</label>
+        <input type="text" id="marcaInput" name="marcaInput" required><br><br>
       </div>
 
       <div class="form-group">
         <label for="edad">Genero:</label>
-        <input type="number" id="edad" name="edad" required><br><br>
+        <select id="opcionesGenero" class="select-wrapper">
+          <option value="U">Unisex</option>
+          <option value="H">Hombre</option>
+          <option value="M">Mujer</option>
+         
+
+        </select>
       </div>
-      <button type="submit">Enviar</button>
+
+      <button type="button" id="btnGuardarProduct">Enviar form</button>
+
     </form>
 
     <div class="AddTallas">
@@ -68,12 +79,14 @@
             <div class="SelectorTallas" id="SelectorTallas" >
               <div class="form-group">
                 <label for="name">Precio</label>
-                <input type="number" id="name" name="name" required>
+                <input type="number" id="price" name="price" required>
               </div>
+
               <div class="form-group">
-                <label for="name">Precio de compra</label>
-                <input type="text" id="name" name="name" required>
+                <label for="priceBuyed">Precio de compra</label>
+                <input type="text" id="priceBuyed" name="priceBuyed" required>
               </div>
+
               <div class="contenedorGridTallas" id="contenedorGridTallas">
               </div>
             </div>
@@ -108,22 +121,16 @@
         <!-- Paleta de colores en tonos de gris -->
         <div id="colorPalette" class="d-flex flex-wrap">
           <!-- Agregar botones o divs para los tonos de gris -->
-          <div class="color-option" data-color="#eeb004" style="background-color: #eeb004;"></div>
-          <div class="color-option" data-color="#dcdcdc" style="background-color: #dcdcdc;"></div>
-          <div class="color-option" data-color="#73ec10" style="background-color: #73ec10;"></div>
-          <div class="color-option" data-color="#f63004" style="background-color: #f63004;"></div>
-          <div class="color-option" data-color="#13f3d5" style="background-color: #13f3d5;"></div>
-          <div class="color-option" data-color="#066cf2" style="background-color: #066cf2;"></div>
-          <div class="color-option" data-color="#aad4f2" style="background-color: #aad4f2;"></div>
-          <div class="color-option" data-color="#5910f7" style="background-color: #5910f7;"></div>
-          <div class="color-option" data-color="#b705f8" style="background-color: #b705f8;"></div>
-          <div class="color-option" data-color="#ee05f6" style="background-color: #ee05f6;"></div>
-          <div class="color-option" data-color="#f1ea17" style="background-color: #f1ea17;"></div>
-          <div class="color-option" data-color="#ffffff" style="background-color: #ffffff;"></div>
-          <div class="color-option" data-color="#ee8dd0" style="background-color: #ee8dd0;"></div>
-          <div class="color-option" data-color="#b2f1eb" style="background-color: #b2f1eb;"></div>
-          <div class="color-option" data-color="#b58722" style="background-color: #b58722;"></div>
-          <div class="color-option" data-color="#000000" style="background-color: #000000;"></div>
+          <div class="color-option" data-color="0" style="background-color: #ffffff;"></div> 
+          <div class="color-option" data-color="1" style="background-color: #000000;"></div>
+          <div class="color-option" data-color="2" style="background-color: #d1d104;"></div>
+          <div class="color-option" data-color="3" style="background-color: #aaaaaa;"></div>
+          <div class="color-option" data-color="4" style="background-color: #1100ff;"></div>
+          <div class="color-option" data-color="5" style="background-color: #ff1100;"></div>
+          <div class="color-option" data-color="6" style="background-color: #f36dd1;"></div>
+          <div class="color-option" data-color="7" style="background-color: #00ff37;"></div>
+          <div class="color-option" data-color="8" style="background-color: #977203;"></div>
+          <div class="color-option" data-color="9" style="background-color: #fffb00;"></div>
         </div>
       </div>
 
@@ -143,7 +150,7 @@
 <script>
 
   
-
+/*
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -167,7 +174,7 @@ if (selectElement) {
 } else {
   console.error("No se pudo encontrar el elemento select.");
 }
-    })
+    })*/
 
 
 
@@ -181,8 +188,13 @@ const contenedorGridTallasElem = document.getElementById('SelectorTallas');
 const tallasCells = document.querySelectorAll('.elementoTallas');
 const colorModal = document.getElementById("colorModal");
 const spanColor = document.getElementById("closeColorModal");
+const btnGuardarProduct = document.getElementById('btnGuardarProduct');
+const selectModel = document.getElementById('opcionesModelosProduct');
+
 
 let itemsSeleccionados = [];
+let modelos = [];
+let colorsArr = ['#ffffff', '#000000', '#d1d104' ,'#aaaaaa', '#1100ff', '#ff1100', '#f36dd1', '#00ff37', '#977203', '#fffb00'];
 
 
  // Cerrar el modal cuando se hace clic en la "X"
@@ -252,7 +264,7 @@ function renderizarTallasCells(item) {
         <div class="elementoTallas" data-valor="${item}">${item}</div>
     `;
     }
-    function contarTallas() {
+function contarTallas() {
     const cantidadTallas = itemsSeleccionados.length;
     console.log('Cantidad de tallas agregadas:', itemsSeleccionados);
     return cantidadTallas;
@@ -263,11 +275,13 @@ function renderizarTallasCells(item) {
     let index = 0;
     $('#contenedorGridTallas').on('click', '.elementoTallas', function() {
     const valorTocado = $(this).data('valor');  // Obtener el valor del atributo data-valor
+    const price =  $('#price').val()
+    const priceGot = $('#priceBuyed').val()
     console.log('Se tocó el item:', valorTocado);
 
     var colorTocado = 0
      index += 1 
-    itemsSeleccionados.push({ index: index, talla: valorTocado, color: colorTocado });
+    itemsSeleccionados.push({ index: index, talla: valorTocado, color: colorTocado , price: price, priceBuyed: priceGot });
     contarTallas()
     // Aquí agregar views al contenedor containerRowElementos
     $('#containerRowElementos').append(`
@@ -315,12 +329,12 @@ $('#containerRowElementos').on('click', '.botonOvaladoColor', function() {
 
     });
 
-    function ejecutarFuncionConColor(color, id) {
+function ejecutarFuncionConColor(color, id) {
     console.log('Color seleccionado:', color);
     console.log('ID del elemento:', id);
 
     // Aquí puedes actualizar el color en la vista o en el arreglo itemsSeleccionados
-    $('.botonOvaladoColor[data-id="' + id + '"]').css('background-color', color);
+    $('.botonOvaladoColor[data-id="' + id + '"]').css('background-color', colorsArr[color]);
 
     // Actualizar el color en el arreglo itemsSeleccionados
     itemsSeleccionados = itemsSeleccionados.map(item =>
@@ -329,6 +343,111 @@ $('#containerRowElementos').on('click', '.botonOvaladoColor', function() {
 
     console.log('Elementos seleccionados después de actualizar color:', itemsSeleccionados);
 }
+
+selectModel.addEventListener('click', function() {
+  $.ajax({
+        url: '/modelos',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}"
+
+        },
+        success: function(response) {
+            console.log("get modelos Exitoso", response.data);
+
+
+            modelos = response.data
+
+            $('#opcionesModelosProduct').empty();
+                
+            // Agregar opción por defecto
+            $('#opcionesModelosProduct').append('<option value="">Seleccione un Modelo</option>');
+                
+            // Recorrer los proveedores y llenar el select con nuevas opciones
+            modelos.forEach(function(modelo) {
+                $('#opcionesModelosProduct').append('<option value="' + modelo.id + '">' + modelo.name + '</option>');
+            });
+         
+            
+          
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+        }
+    });
+
+})
+
+document.getElementById('opcionesModelosProduct').addEventListener('change', function() {
+    var selectedValue = this.value;
+    console.log('Seleccionaste valor: ' + selectedValue);
+    var modelCurrent = modelos.find(item => item.id == selectedValue);
+    
+    // Aquí puedes hacer algo con el valor seleccionado
+    document.getElementById('codeModel').value =  modelCurrent.codeID
+  });
+
+
+btnGuardarProduct.addEventListener('click', function(){
+
+  const model = document.getElementById('opcionesModelosProduct');
+  const genero = document.getElementById('opcionesGenero');
+  const marca =  $('#marcaInput').val()
+  const price =  $('#price').val()
+  const priceGot = $('#priceBuyed').val()
+  const nameProduct = $('#nameProduct').val()
+
+
+
+/*
+  const bodegaElement = document.getElementById('bodegaOption');
+  const codeID = document.getElementById('bodegaOption');
+  const nameProduct = document.getElementById('bodegaOption');
+  const countProduct = document.getElementById('bodegaOption');
+  const images = document.getElementById('bodegaOption');
+  const tags = document.getElementById('bodegaOption');
+  const active = document.getElementById('bodegaOption');
+  const shippable = document.getElementById('bodegaOption');*/
+
+
+ let modelValue = model.value;
+ let generoValue = genero.value;
+ let arrElemet = itemsSeleccionados;
+
+ console.log('Enviar formulario', arrElemet)
+
+
+
+
+  $.ajax({
+        url: '/products',
+        type: 'POST',
+        data: {
+            _token: "{{ csrf_token() }}",
+            nameProduct: nameProduct,
+            marca: marca,
+            price: price,
+            priceBuyed: priceGot,
+            modelValue : modelValue,
+            generoValue: generoValue,
+            elements: arrElemet
+           
+
+        },
+        success: function(response) {
+            console.log("Registro exitoso", response);
+            
+          alert("Registro Exitoso ")
+            // downloadCotizacion(id)
+        },
+        error: function(xhr, status, error) {
+            alert("Error, ", error)
+        }
+    });
+
+})
+
+
 
 </script>
 

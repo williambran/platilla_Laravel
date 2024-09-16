@@ -54,6 +54,8 @@ Route::post('/modelos', [ModelProductController::class, 'store'])->name('model.s
 Route::get('/modelos', [ModelProductController::class, 'modelos'])->name('obtener.modelos');
 Route::get('/provedores', [ProveedorController::class, 'getProvedores'])->name('all.provedores');
 Route::get('/bodegas', [AdminController::class, 'getBodegas'])->name('all.bodegas');
+Route::post('/products', [AdminController::class, 'storeProducts'])->name('save.products');
+
 
 
 
