@@ -13,11 +13,11 @@ class ModelSupplier extends Model
 
 
     public function suppliers(){
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
     public function modelProducts() {
-        return $this->belongsTo(ModelProduct::class);
+        return $this->belongsTo(ModelProduct::class, 'model_id');
     }
 
     

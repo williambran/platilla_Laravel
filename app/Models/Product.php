@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $table = 'products';
+
 
     protected $dates = [
         'created_at',
@@ -19,7 +21,7 @@ class Product extends Model
 
 
     public function modelProduct() {
-        return $this->belongsTo(ModelProduct::class)->where('model_codeID',$this->model_codeID);
+        return $this->belongsTo(ModelProduct::class, 'model_id');
     }
 
     public function details() {
