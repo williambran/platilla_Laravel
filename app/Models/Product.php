@@ -25,7 +25,12 @@ class Product extends Model
     }
 
     public function details() {
-        return $this->hasMany(Detail::class);
+        return $this->hasMany(Detail::class, 'product_id');
+    }
+
+    public function countProduct() {
+        $detailsCount = $this->details()->count();
+        return $detailsCount;
     }
     
 }

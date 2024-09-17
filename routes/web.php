@@ -53,6 +53,8 @@ Route::post('/admin/addProvedor', [ProveedorController::class, 'store'])->name('
 Route::post('/modelos', [ModelProductController::class, 'store'])->name('model.store');
 Route::get('/modelos', [ModelProductController::class, 'modelos'])->name('obtener.modelos');
 Route::get('/provedores', [ProveedorController::class, 'getProvedores'])->name('all.provedores');
+Route::get('/provedores/{id}', [ProveedorController::class, 'getProvedores'])->name('some.provedores');
+
 Route::get('/bodegas', [AdminController::class, 'getBodegas'])->name('all.bodegas');
 Route::post('/products', [AdminController::class, 'storeProducts'])->name('save.products');
 
