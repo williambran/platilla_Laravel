@@ -22,7 +22,7 @@
 
     <div class="form-group">
         <label for="name">Code Model: *</label>
-        <input type="text" id="codeModel" name="codeModel" readonly required>
+        <input type="text" id="codeModel" name="codeModel"  required>
     </div>
 
     <div class="form-group">
