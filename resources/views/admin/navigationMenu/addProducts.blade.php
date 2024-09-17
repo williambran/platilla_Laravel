@@ -850,9 +850,9 @@ function getColor() {
 
 .color-option {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
 
 .color-option:hover {
