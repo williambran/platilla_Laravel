@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('active')->default(0);
             $table->date('fecha_activacion')->nullable();
             $table->boolean('shipplable')->default(0);
+            $table->boolean('changedPrice')->default(0);
             $table->foreignId('model_id')->constrained('models')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

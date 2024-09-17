@@ -57,6 +57,8 @@ Route::get('/provedores/{id}', [ProveedorController::class, 'getProvedores'])->n
 
 Route::get('/bodegas', [AdminController::class, 'getBodegas'])->name('all.bodegas');
 Route::post('/products', [AdminController::class, 'storeProducts'])->name('save.products');
+Route::get('/colores', [AdminController::class, 'getColors'])->name('get.color');
+
 
 
 

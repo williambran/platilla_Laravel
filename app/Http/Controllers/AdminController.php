@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ColorProducts;
 use App\Models\Detail;
 use App\Models\Inventory;
 use App\Models\ModelProduct;
 use App\Models\ModelSupplier;
 use App\Models\Product;
 use App\Models\Stock;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
@@ -75,7 +77,7 @@ class AdminController extends Controller
 
             $details = new Detail();
             $details->model = $codeIDModel;
-            $details->color = $product['color'];
+            $details->color_id = $product['color'];
             $details->talla = $product['talla'];
             $details->dealer = $provedorName;
             $details->product_id = $productToEdit->id;
@@ -103,7 +105,7 @@ class AdminController extends Controller
 
             $details = new Detail();
             $details->model = $codeIDModel;
-            $details->color = $product['color'];
+            $details->color_id = $product['color'];
             $details->talla = $product['talla'];
             $details->dealer = $provedorName;
             $details->product_id = $productModel->id;
@@ -117,6 +119,17 @@ class AdminController extends Controller
         }
 
        }
+
+    }
+
+    public function getColors(){
+        try {
+            $colors = ColorProducts::all();
+            return response()->json(['success' => true, 'message' => 'Servicio exitoso.', 'data' => $colors ]);
+
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Servicio Salio mal .'], 500);
+        }
 
     }
 }

@@ -25,7 +25,7 @@ class ProveedorController extends Controller
             return response()->json(['success' => true, 'message' => 'Registrado exitosamente.', 'IDProvedor' =>  $supplier->id, 'name' => $supplier->name  ]);
         }
         catch(\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'No se pudo guardar']);
+            return response()->json(['success' => false, 'message' => $e],500);
 
         }
 

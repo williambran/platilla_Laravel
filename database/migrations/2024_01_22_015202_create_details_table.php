@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('details', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->string('color');
+            $table->foreignId('color_id')->constrained('color_products')->onDelete('cascade');
             $table->string('talla');
             $table->double('weight')->nullable();
             $table->double('height')->nullable();
