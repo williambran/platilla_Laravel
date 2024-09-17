@@ -115,6 +115,7 @@
               },
               success: function(response) {
                 console.log("Registro exitoso antes", provedores);
+                provedores = []
 
                 provedores.unshift({id: response.IDProvedor, name: response.name })
                 console.log("Registro exitoso", provedores);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelProduct;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class ProveedorController extends Controller
             return response()->json(['success' => true, 'message' => 'Registrado exitosamente.', 'IDProvedor' =>  $supplier->id, 'name' => $supplier->name  ]);
         }
         catch(\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'No se pudo guardar']);
+            return response()->json(['success' => false, 'message' => $e],500);
 
         }
 
@@ -33,12 +34,20 @@ class ProveedorController extends Controller
 
     }
 
-    public function getProvedores(){
+    public function getProvedores($idModel = null) {
         try {
-            $supplier = Supplier::all();
 
-          
-            return response()->json(['success' => true, 'message' => 'Registrado exitosamente.', 'data' => $supplier ]);
+            if ($idModel){
+                $modelo = ModelProduct::find($idModel);
+                $supplier = $modelo->supplier;
+            }
+            else {
+                $supplier = Supplier::all();
+
+            }
+            return response()->json(['success' => true,
+                                     'message' => 'Success Service.',
+                                     'data' => $supplier ]);
         }
         catch(\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Algun error']);

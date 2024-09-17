@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ColorProducts;
 use App\Models\Detail;
 use App\Models\Inventory;
 use App\Models\ModelProduct;
+use App\Models\ModelSupplier;
 use App\Models\Product;
 use App\Models\Stock;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
@@ -60,6 +63,7 @@ class AdminController extends Controller
         $marca = $request->input('marca');
         $genero = $request->input('generoValue');
         $arrProducts = $request->input("elements");
+        $provedorName = $request->input("nameProvedor");
 
         $model = ModelProduct::find($request->input('modelValue'));
         $codeIDModel = $model->codeID;
@@ -70,16 +74,24 @@ class AdminController extends Controller
         $productToEdit = Product::where('codeID',$idProduct)->first();
 
         if ($productToEdit){
-            $cantidas = $productToEdit->cantidad;
-            $cantidas++;
-            $productToEdit-save();
+
+            $details = new Detail();
+            $details->model = $codeIDModel;
+            $details->color_id = $product['color'];
+            $details->talla = $product['talla'];
+            $details->dealer = $provedorName;
+            $details->product_id = $productToEdit->id;
+            $details->expiration = date('Y-m-d H:i:s');
+            $details->save();
+            
+            $productToEdit->cantidad = $productToEdit->countProduct();
+            $productToEdit->save();
 
         } else {
             $productModel = new Product();
             $productModel->name = $name;
             $productModel->model_id = $model->id;
             $productModel->codeID = $idProduct;
-            $productModel->name = $name;
             $productModel->price =  $product['price'];
             $productModel->priceCompra = $product['priceBuyed'];
             $productModel->cantidad = 1;
@@ -91,10 +103,33 @@ class AdminController extends Controller
             $productModel->fecha_activacion = date('Y-m-d H:i:s');
             $productModel->save();
 
+            $details = new Detail();
+            $details->model = $codeIDModel;
+            $details->color_id = $product['color'];
+            $details->talla = $product['talla'];
+            $details->dealer = $provedorName;
+            $details->product_id = $productModel->id;
+            $details->expiration = date('Y-m-d H:i:s');
+            $details->save();
+            $productModel->cantidad = $productModel->countProduct();
+            $productModel->save();
+
+
 
         }
 
        }
+
+    }
+
+    public function getColors(){
+        try {
+            $colors = ColorProducts::all();
+            return response()->json(['success' => true, 'message' => 'Servicio exitoso.', 'data' => $colors ]);
+
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Servicio Salio mal .'], 500);
+        }
 
     }
 }

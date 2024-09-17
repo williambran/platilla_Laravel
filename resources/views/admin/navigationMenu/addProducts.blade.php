@@ -10,28 +10,36 @@
     <form id="miFormulario" class="miFormulario">
 
       <div class="form-group">
-        <label for="name">Nombre de Producto:</label>
+        <label for="name">Nombre de Producto: *</label>
         <input type="text" id="nameProduct" name="nameProduct"  required>
       </div>
 
       <div class="form-group"> 
-        <label for="opcionesModelosProduct">Elige un Modelo:</label>
+        <label for="opcionesModelosProduct">Elige un Modelo: *</label>
         <select id="opcionesModelosProduct" class="select-wrapper">
         </select>
       </div>
 
     <div class="form-group">
-        <label for="name">Code Model:</label>
+        <label for="name">Code Model: *</label>
         <input type="text" id="codeModel" name="codeModel" readonly required>
+    </div>
+
+    <div class="form-group">
+      <label for="opcionesProvedor">Provedor :</label>
+      <div id="ProvedorToProduct" >
+        <select id="opcionesProvedor" class="select-wrapper">
+        </select>
+      </div>
     </div>
       
       <div class="form-group">
-        <label for="marcaInput">Marca :</label>
+        <label for="marcaInput">Marca : *</label>
         <input type="text" id="marcaInput" name="marcaInput" required><br><br>
       </div>
 
       <div class="form-group">
-        <label for="edad">Genero:</label>
+        <label for="edad">Genero: *</label>
         <select id="opcionesGenero" class="select-wrapper">
           <option value="U">Unisex</option>
           <option value="H">Hombre</option>
@@ -121,16 +129,7 @@
         <!-- Paleta de colores en tonos de gris -->
         <div id="colorPalette" class="d-flex flex-wrap">
           <!-- Agregar botones o divs para los tonos de gris -->
-          <div class="color-option" data-color="0" style="background-color: #ffffff;"></div> 
-          <div class="color-option" data-color="1" style="background-color: #000000;"></div>
-          <div class="color-option" data-color="2" style="background-color: #d1d104;"></div>
-          <div class="color-option" data-color="3" style="background-color: #aaaaaa;"></div>
-          <div class="color-option" data-color="4" style="background-color: #1100ff;"></div>
-          <div class="color-option" data-color="5" style="background-color: #ff1100;"></div>
-          <div class="color-option" data-color="6" style="background-color: #f36dd1;"></div>
-          <div class="color-option" data-color="7" style="background-color: #00ff37;"></div>
-          <div class="color-option" data-color="8" style="background-color: #977203;"></div>
-          <div class="color-option" data-color="9" style="background-color: #fffb00;"></div>
+
         </div>
       </div>
 
@@ -150,31 +149,12 @@
 <script>
 
   
-/*
+
 
 document.addEventListener('DOMContentLoaded', function () {
+  getColor()
 
-
-
-      const datos = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
-      console.log("Se va a bucar elemento");
-
-// Obtener el select
-const selectElement = document.getElementById('opcionesWito');
-
-// Verificar si el select fue encontrado correctamente
-if (selectElement) {
-  // Llenar el select con las opciones del arreglo
-  datos.forEach(opcion => {
-    const newOption = document.createElement('option');
-    newOption.value = opcion;  // El valor de la opción
-    newOption.textContent = opcion;  // El texto que verá el usuario
-    selectElement.appendChild(newOption);  // Agregar la opción al select
-  });
-} else {
-  console.error("No se pudo encontrar el elemento select.");
-}
-    })*/
+})
 
 
 
@@ -194,7 +174,8 @@ const selectModel = document.getElementById('opcionesModelosProduct');
 
 let itemsSeleccionados = [];
 let modelos = [];
-let colorsArr = ['#ffffff', '#000000', '#d1d104' ,'#aaaaaa', '#1100ff', '#ff1100', '#f36dd1', '#00ff37', '#977203', '#fffb00'];
+let provedoresResponse = [];
+let coloresArr = [];
 
 
  // Cerrar el modal cuando se hace clic en la "X"
@@ -334,7 +315,7 @@ function ejecutarFuncionConColor(color, id) {
     console.log('ID del elemento:', id);
 
     // Aquí puedes actualizar el color en la vista o en el arreglo itemsSeleccionados
-    $('.botonOvaladoColor[data-id="' + id + '"]').css('background-color', colorsArr[color]);
+    $('.botonOvaladoColor[data-id="' + id + '"]').css('background-color', coloresArr[color - 1].color);
 
     // Actualizar el color en el arreglo itemsSeleccionados
     itemsSeleccionados = itemsSeleccionados.map(item =>
@@ -385,6 +366,7 @@ document.getElementById('opcionesModelosProduct').addEventListener('change', fun
     
     // Aquí puedes hacer algo con el valor seleccionado
     document.getElementById('codeModel').value =  modelCurrent.codeID
+    getProvedores(modelCurrent.id)
   });
 
 
@@ -396,19 +378,13 @@ btnGuardarProduct.addEventListener('click', function(){
   const price =  $('#price').val()
   const priceGot = $('#priceBuyed').val()
   const nameProduct = $('#nameProduct').val()
+  var provedorName = ''
+  if (provedoresResponse === 0) {
+     provedorName = $('#opcionesProvedorInput').val()
+  } else {
+     provedorName = document.getElementById('opcionesProvedor').value;
 
-
-
-/*
-  const bodegaElement = document.getElementById('bodegaOption');
-  const codeID = document.getElementById('bodegaOption');
-  const nameProduct = document.getElementById('bodegaOption');
-  const countProduct = document.getElementById('bodegaOption');
-  const images = document.getElementById('bodegaOption');
-  const tags = document.getElementById('bodegaOption');
-  const active = document.getElementById('bodegaOption');
-  const shippable = document.getElementById('bodegaOption');*/
-
+  }
 
  let modelValue = model.value;
  let generoValue = genero.value;
@@ -430,7 +406,8 @@ btnGuardarProduct.addEventListener('click', function(){
             priceBuyed: priceGot,
             modelValue : modelValue,
             generoValue: generoValue,
-            elements: arrElemet
+            elements: arrElemet,
+            nameProvedor :  provedorName 
            
 
         },
@@ -438,7 +415,8 @@ btnGuardarProduct.addEventListener('click', function(){
             console.log("Registro exitoso", response);
             
           alert("Registro Exitoso ")
-            // downloadCotizacion(id)
+          location.reload();
+          
         },
         error: function(xhr, status, error) {
             alert("Error, ", error)
@@ -447,6 +425,76 @@ btnGuardarProduct.addEventListener('click', function(){
 
 })
 
+function getProvedores(id) {
+  $.ajax({
+        url: '/provedores/' + id,
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+            console.log("Registro exitoso", response);
+            provedoresResponse = response.data
+            let componente = document.getElementById('ProvedorToProduct');
+            if (provedoresResponse.length === 0 ){
+              
+              componente.innerHTML = '<input type="text" id="opcionesProvedorInput" placeholder="Introduce un valor" class="input-wrapper">';
+
+
+            } else {
+              componente.innerHTML =  '<select id="opcionesProvedor" class="select-wrapper"> </select>'
+              $('#opcionesProvedor').empty();
+    
+              // Agregar opción por defecto
+              $('#opcionesProvedor').append('<option value="">Seleccione un Provedor</option>');
+
+              // Recorrer los proveedores y llenar el select con nuevas opciones
+              provedoresResponse.forEach(function(provedor) {
+              $('#opcionesProvedor').append('<option value="' + provedor.name + '">' + provedor.name + '</option>');
+               })
+          }
+        } ,error: function(xhr, status, error) {
+            alert("Error, ", error)
+        }
+        
+
+    });
+}
+
+function getColor() {
+  $.ajax({
+        url: '/colores',
+        type: 'GET',
+        data: {
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+
+          coloresArr = response.data
+          console.log('Colores', coloresArr)
+          $('#colorPalette').empty();
+    
+    
+          // Recorrer los proveedores y llenar el select con nuevas opciones
+          coloresArr.forEach(function(color) {
+         // $('#colorPalette').append('<div class="color-option" data-color="' +color.id +' " style="background-color: '+ color.color+ ';">  </div> ');
+         $('#colorPalette').append(
+          '<div class="color-option" data-color="' + color.id + '">' +
+        '<div class="color-circle" style="width: 50px; height: 50px; border-radius: 50%; background-color: ' + color.color + ';"></div>' +
+        '<span class="color-name">' + color.nombre + '</span>' +
+    '</div>'
+         )
+          
+});
+
+
+        } ,error: function(xhr, status, error) {
+            alert("Error, ", error)
+        }
+        
+
+    });
+}
 
 
 </script>
@@ -801,16 +849,24 @@ btnGuardarProduct.addEventListener('click', function(){
 }
 
 .color-option {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin: 5px;
-  cursor: pointer;
-  border: 1px solid #ccc;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
 }
 
 .color-option:hover {
-  border: 2px solid #000;
+  border: 0.5px solid #acaaaa;
+  border-radius: 5px;
+  
+}
+
+
+
+.color-name {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
 }
 
 </style>

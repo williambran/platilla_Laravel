@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Detail extends Model
 {
     use HasFactory;
+    protected $table = 'details';
+
 
     public function tallas(){
         return $this->hasMany(TallaDetail::class);
