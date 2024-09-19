@@ -27,19 +27,40 @@ class AdminController extends Controller
     public function getBarcodeExample(Request $data) 
     {
         $generator = new BarcodeGeneratorPNG();
-        $barcode = $generator->getBarcode($data->codeID, $generator::TYPE_CODE_39);
+        $barcode = $generator->getBarcode($data->codeID, $generator::TYPE_CODE_128);
 
         $barcodeBase64 = base64_encode($barcode);
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
-        $arrBarCode[] =  'data:image/png;base64,' . $barcodeBase64;
 
+        $objeto[] = [
+            'img64' => 'data:image/png;base64,' . $barcodeBase64,
+            'codeID' => $data->codeID,
+            'precio' => $data->price,
+            'nombre' => "Zapatitos chidos wito"
 
+        ];
+        $objeto[] = [
+            'img64' => 'data:image/png;base64,' . $barcodeBase64,
+            'codeID' => $data->codeID,
+            'precio' => $data->price,
+            'nombre' => "Zapatitos chidos wito"
 
-        return  response()->json(['success' => true, 'message' => $arrBarCode]);
+        ];
+        $objeto[] = [
+            'img64' => 'data:image/png;base64,' . $barcodeBase64,
+            'codeID' => $data->codeID,
+            'precio' => '90.0',
+            'nombre' => "Zapatitos chidos wito"
+
+        ];
+        $objeto[] = [
+            'img64' => 'data:image/png;base64,' . $barcodeBase64,
+            'codeID' => $data->codeID,
+            'precio' => "140.0",
+            'nombre' => "Zapatitos chidos wito"
+
+        ];
+
+        return  response()->json(['success' => true, 'message' => $objeto]);
 
     }
 
